@@ -22,7 +22,7 @@ import MobileTableHeader from '../mobile/MobileTableHeader'
 import { useTranslation } from 'next-i18next'
 
 export default function AccountBorrows() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'account'])
   const balances = useBalances()
   const mangoGroup = useMangoStore((s) => s.selectedMangoGroup.current)
   const mangoCache = useMangoStore((s) => s.selectedMangoGroup.cache)
@@ -61,7 +61,9 @@ export default function AccountBorrows() {
 
   return (
     <>
-      <div className="pb-2 text-th-fgd-1 text-lg">{t('your-borrows')}</div>
+      <div className="pb-2 text-th-fgd-1 text-lg">
+        {t('account:your-borrows')}
+      </div>
       {/* TODO: calculate LiabsVal without perp markets
         <div className="border border-th-red flex items-center justify-between p-2 rounded">
           <div className="pr-4 text-xs text-th-fgd-3">{t('total-borrow-value')}:</div>
@@ -269,14 +271,16 @@ export default function AccountBorrows() {
                 <div
                   className={`w-full text-center py-6 bg-th-bkg-1 text-th-fgd-3 rounded-md`}
                 >
-                  {t('no-borrows')}
+                  {t('account:no-borrows')}
                 </div>
               )
             ) : null}
           </div>
         </div>
       </div>
-      <div className="pb-2 pt-8 text-th-fgd-1 text-lg">{t('all-assets')}</div>
+      <div className="pb-2 pt-8 text-th-fgd-1 text-lg">
+        {t('account:all-assets')}
+      </div>
       <div className="flex flex-col pb-2 pt-4">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -287,7 +291,7 @@ export default function AccountBorrows() {
                     <Th>{t('asset')}</Th>
                     <Th>{t('price')}</Th>
                     <Th>{t('borrow-rate')} (APR)</Th>
-                    <Th>{t('max-borrow')}</Th>
+                    <Th>{t('account:max-borrow')}</Th>
                     <Th>{t('liquidity')}</Th>
                   </TrHead>
                 </thead>
@@ -425,7 +429,7 @@ export default function AccountBorrows() {
                           </div>
                           <div className="text-left">
                             <div className="pb-0.5 text-th-fgd-3 text-xs">
-                              {t('max-borrow')}
+                              {t('account:max-borrow')}
                             </div>
                             {mangoAccount
                               .getMaxWithBorrowForToken(
@@ -482,7 +486,7 @@ export default function AccountBorrows() {
           isOpen={showBorrowModal}
           onClose={handleCloseWithdraw}
           tokenSymbol={borrowSymbol}
-          title={t('borrow-withdraw')}
+          title={t('account:borrow-withdraw')}
           borrow
         />
       )}

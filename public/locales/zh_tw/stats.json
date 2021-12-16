@@ -1,0 +1,20 @@
+{
+  "average-borrow": "平均借貸率",
+  "average-deposit": "平均存款率",
+  "borrow-interest": "借貸利息",
+  "current-stats": "當前統計",
+  "deposit-interest": "存款利息",
+  "depth-rewarded": "獎勵深度",
+  "est-period-end": "預計期末時間",
+  "liquidity-mining": "流動性挖礦",
+  "minutes": "分鐘",
+  "mngo-left-period": "期間剩餘的MNGO",
+  "mngo-per-period": "每期MNGO",
+  "period-progress": "期間進度",
+  "perpetual-futures": "永續合約",
+  "target-period-length": "目標期間長度",
+  "total-borrows": "借貸總數量",
+  "total-deposit-value": "存款總價值",
+  "total-deposits": "存款總數量",
+  "utilization": "利用率"
+}

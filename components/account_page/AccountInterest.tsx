@@ -24,7 +24,7 @@ interface InterestStats {
 }
 
 const AccountInterest = () => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'account'])
   const mangoAccount = useMangoStore((s) => s.selectedMangoAccount.current)
   const groupConfig = useMangoStore((s) => s.selectedMangoGroup.config)
   const [interestStats, setInterestStats] = useState<any>([])
@@ -151,14 +151,14 @@ const AccountInterest = () => {
   return (
     <>
       <div className="pb-4 text-th-fgd-1 text-lg">
-        {t('interest-earned')}
+        {t('account:interest-earned')}
         <Button
           className={`float-right text-xs h-8 pt-0 pb-0 pl-3 pr-3`}
           onClick={exportInterestDataToCSV}
         >
           <div className={`flex items-center`}>
             <SaveIcon className={`h-4 w-4 mr-1.5`} />
-            {t('export-data')}
+            {t('account:export-data')}
           </div>
         </Button>
       </div>{' '}
@@ -169,8 +169,8 @@ const AccountInterest = () => {
               <thead>
                 <TrHead>
                   <Th>{t('token')}</Th>
-                  <Th>{t('total-deposit-interest')}</Th>
-                  <Th>{t('total-borrow-interest')}</Th>
+                  <Th>{t('account:total-deposit-interest')}</Th>
+                  <Th>{t('account:total-borrow-interest')}</Th>
                   <Th>{t('net')}</Th>
                 </TrHead>
               </thead>
@@ -179,7 +179,9 @@ const AccountInterest = () => {
                   <TrBody index={0}>
                     <td colSpan={4}>
                       <div className="bg-th-bkg-3 flex rounded-md text-th-fgd-3">
-                        <div className="mx-auto py-4">{t('no-interest')}</div>
+                        <div className="mx-auto py-4">
+                          {t('account:no-interest')}
+                        </div>
                       </div>
                     </td>
                   </TrBody>
@@ -227,7 +229,7 @@ const AccountInterest = () => {
             </Table>
           ) : interestStats.length === 0 ? (
             <div className="bg-th-bkg-3 flex rounded-md text-th-fgd-3">
-              <div className="mx-auto py-4">{t('no-interest')}</div>
+              <div className="mx-auto py-4">{t('account:no-interest')}</div>
             </div>
           ) : (
             <>
@@ -268,14 +270,14 @@ const AccountInterest = () => {
                         <div className="grid grid-cols-2 grid-flow-row gap-4">
                           <div className="text-left">
                             <div className="pb-0.5 text-th-fgd-3 text-xs">
-                              {t('total-deposit-interest')}
+                              {t('account:total-deposit-interest')}
                             </div>
                             {stats.total_deposit_interest.toFixed(decimals)}{' '}
                             {symbol}
                           </div>
                           <div className="text-left">
                             <div className="pb-0.5 text-th-fgd-3 text-xs">
-                              {t('total-borrow-interest')}
+                              {t('account:total-borrow-interest')}
                             </div>
                             {stats.total_borrow_interest.toFixed(decimals)}{' '}
                             {symbol}
@@ -292,7 +294,9 @@ const AccountInterest = () => {
             {!isEmpty(hourlyInterestStats) && !loading ? (
               <>
                 <div className="flex items-center justify-between pb-4 pt-6 w-full">
-                  <div className="text-th-fgd-1 text-lg">{t('history')}</div>
+                  <div className="text-th-fgd-1 text-lg">
+                    {t('account:history')}
+                  </div>
                   <Select
                     value={selectedAsset}
                     onChange={(a) => setSelectedAsset(a)}
@@ -369,7 +373,7 @@ const AccountInterest = () => {
                       </Table>
                     ) : (
                       <div className="flex justify-center w-full bg-th-bkg-3 py-4">
-                        {t('no-interest')}
+                        {t('account:no-interest')}
                       </div>
                     )}
                   </div>

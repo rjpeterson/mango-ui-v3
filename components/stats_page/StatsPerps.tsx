@@ -36,7 +36,7 @@ function calculateFundingRate(
 }
 
 export default function StatsPerps({ perpStats }) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'stats'])
   const [selectedAsset, setSelectedAsset] = useState<string>('BTC-PERP')
   const marketConfigs = useMangoGroupConfig().perpMarkets
   const selectedMarketConfig = marketConfigs.find(
@@ -146,7 +146,7 @@ export default function StatsPerps({ perpStats }) {
               .toLowerCase()}.svg`}
             className="mr-2.5"
           />
-          {selectedAsset.split(/-|\//)[0]} {t('perpetual-futures')}
+          {selectedAsset.split(/-|\//)[0]} {t('stats:perpetual-futures')}
         </div>
       </div>
       <div className="grid grid-flow-row grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-2 gap-2 sm:gap-4">
@@ -188,9 +188,9 @@ export default function StatsPerps({ perpStats }) {
           />
         </div>
         <div className="border border-th-bkg-4 relative p-4 rounded-md">
-          <div className="text-lg">{t('liquidity-mining')}</div>
+          <div className="text-lg">{t('stats:liquidity-mining')}</div>
           <div className="flex justify-between mt-4">
-            <div>{t('depth-rewarded')}</div>
+            <div>{t('stats:depth-rewarded')}</div>
             <div>
               {maxDepthUi.toLocaleString() +
                 ' ' +
@@ -198,17 +198,17 @@ export default function StatsPerps({ perpStats }) {
             </div>
           </div>
           <div className="flex justify-between mt-4">
-            <div>{t('target-period-length')}</div>
+            <div>{t('stats:target-period-length')}</div>
             <div>
               {(
                 selectedMarket.liquidityMiningInfo.targetPeriodLength.toNumber() /
                 60
               ).toFixed()}{' '}
-              {t('minutes')}
+              {t('stats:minutes')}
             </div>
           </div>
           <div className="flex justify-between mt-4">
-            <div>{t('mngo-per-period')}</div>
+            <div>{t('stats:mngo-per-period')}</div>
             <div>
               {(
                 selectedMarket.liquidityMiningInfo.mngoPerPeriod.toNumber() /
@@ -217,7 +217,7 @@ export default function StatsPerps({ perpStats }) {
             </div>
           </div>
           <div className="flex justify-between mt-4">
-            <div>{t('mngo-left-period')}</div>
+            <div>{t('stats:mngo-left-period')}</div>
             <div>
               {(
                 selectedMarket.liquidityMiningInfo.mngoLeft.toNumber() /
@@ -227,11 +227,11 @@ export default function StatsPerps({ perpStats }) {
           </div>
 
           <div className="flex justify-between mt-4">
-            <div>{t('est-period-end')}</div>
+            <div>{t('stats:est-period-end')}</div>
             <div>{new Date(est * 1000).toUTCString()}</div>
           </div>
           <div className="flex justify-between mt-4">
-            <div>{t('period-progress')}</div>
+            <div>{t('stats:period-progress')}</div>
             <div>{(progress * 100).toFixed(2)}%</div>
           </div>
         </div>

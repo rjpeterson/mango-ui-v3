@@ -180,13 +180,13 @@ export default function AccountOverview() {
         <PositionsTable />
       </div>
       <div className="pb-4 text-th-fgd-1 text-lg">
-        {t('assets-liabilities')}
+        {t('account:assets-liabilities')}
       </div>
 
       <div className="grid grid-flow-col grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 gap-2 sm:gap-4 pb-8">
         <div className="border border-th-bkg-4 p-3 sm:p-4 rounded-md sm:rounded-lg">
           <div className="pb-0.5 text-xs text-th-fgd-3">
-            {t('total-assets')}
+            {t('account:total-assets')}
           </div>
           <div className="flex items-center">
             <div className="text-lg text-th-fgd-1">
@@ -198,7 +198,7 @@ export default function AccountOverview() {
         </div>
         <div className="border border-th-bkg-4 p-3 sm:p-4 rounded-md sm:rounded-lg">
           <div className="pb-0.5 text-xs text-th-fgd-3">
-            {t('total-liabilities')}
+            {t('account:total-liabilities')}
           </div>
           <div className="flex items-center">
             <div className="text-lg text-th-fgd-1">
@@ -216,7 +216,7 @@ export default function AccountOverview() {
           className="text-xs"
           onChange={() => setShowZeroBalances(!showZeroBalances)}
         >
-          {t('show-zero')}
+          {t('account:show-zero')}
         </Switch>
       </div>
       <BalancesTable showZeroBalances={showZeroBalances} />

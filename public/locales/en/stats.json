@@ -1,0 +1,20 @@
+{
+  "average-borrow": "Average Borrow Rates",
+  "average-deposit": "Average Deposit Rates",
+  "borrow-interest": "Borrow Interest",
+  "current-stats": "Current Stats",
+  "deposit-interest": "Deposit Interest",
+  "depth-rewarded": "Depth Rewarded",
+  "est-period-end": "Est Period End",
+  "liquidity-mining": "Liquidity Mining",
+  "minutes": "mins",
+  "mngo-left-period": "MNGO Left In Period",
+  "mngo-per-period": "MNGO Per Period",
+  "period-progress": "Period Progress",
+  "perpetual-futures": "Perpetual Futures",
+  "target-period-length": "Target Period Length",
+  "total-borrows": "Total Borrows",
+  "total-deposit-value": "Total Deposit Value",
+  "total-deposits": "Total Deposits",
+  "utilization": "Utilization"
+}

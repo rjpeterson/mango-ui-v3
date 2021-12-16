@@ -25,7 +25,7 @@ const historyViews = [
 ]
 
 export default function AccountHistory() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'account'])
   const [view, setView] = useState('Trades')
   const [history, setHistory] = useState(null)
   const mangoAccount = useMangoStore((s) => s.selectedMangoAccount.current)
@@ -98,7 +98,7 @@ export default function AccountHistory() {
 
     if (dataToExport.length == 0) {
       notify({
-        title: t('export-data-empty'),
+        title: t('account:export-data-empty'),
         description: '',
         type: 'info',
       })
@@ -140,15 +140,16 @@ export default function AccountHistory() {
             {t(`${view.toLowerCase()}-history`)}
           </div>
           <div className="mr-4 text-xs text-th-fgd-3">
-            {t('delay-displaying-recent')} {t('use-explorer-one')}
+            {t('account:delay-displaying-recent')}{' '}
+            {t('account:use-explorer-one')}
             <a
               href={`https://explorer.solana.com/address/${mangoAccountPk}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {t('use-explorer-two')}
+              {t('account:use-explorer-two')}
             </a>
-            {t('use-explorer-three')}
+            {t('account:use-explorer-three')}
           </div>
         </div>
         {view !== 'Trades' ? (
@@ -158,7 +159,7 @@ export default function AccountHistory() {
           >
             <div className={`flex items-center`}>
               <SaveIcon className={`h-4 w-4 mr-1.5`} />
-              {t('export-data')}
+              {t('account:export-data')}
             </div>
           </Button>
         ) : null}
@@ -264,7 +265,7 @@ const LiquidationHistoryTable = ({ history, view }) => {
                     className="flex items-center no-underline font-normal"
                     onClick={() => requestSort('block_datetime')}
                   >
-                    {t('date')}
+                    {t('account:date')}
                     <ArrowSmDownIcon
                       className={`default-transition flex-shrink-0 h-4 w-4 ml-1 ${
                         sortConfig?.key === 'block_datetime'
@@ -462,7 +463,7 @@ const HistoryTable = ({ history, view }) => {
                     className="flex items-center no-underline font-normal"
                     onClick={() => requestSort('block_datetime')}
                   >
-                    {t('date')}
+                    {t('account:date')}
                     <ArrowSmDownIcon
                       className={`default-transition flex-shrink-0 h-4 w-4 ml-1 ${
                         sortConfig?.key === 'block_datetime'
@@ -562,7 +563,7 @@ const HistoryTable = ({ history, view }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <span>{t('view-transaction')}</span>
+                        <span>{t('account:view-transaction')}</span>
                         <ExternalLinkIcon className={`h-4 w-4 ml-1.5`} />
                       </a>
                     </Td>
@@ -574,7 +575,7 @@ const HistoryTable = ({ history, view }) => {
         </>
       ) : (
         <div className="w-full text-center py-6 bg-th-bkg-1 text-th-fgd-3 rounded-md">
-          {t('history-empty')}
+          {t('account:history-empty')}
         </div>
       )}
     </>

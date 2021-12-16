@@ -1,0 +1,20 @@
+{
+  "average-borrow": "Tasas de prestadas promedio",
+  "average-deposit": "Tasas de depósito promedio",
+  "borrow-interest": "Intereses de préstamo",
+  "current-stats": "Estadísticas actuales",
+  "deposit-interest": "Interés de depósito",
+  "depth-rewarded": "Depth Rewarded",
+  "est-period-end": "Est Period End",
+  "liquidity-mining": "Liquidity Mining",
+  "minutes": "mins",
+  "mngo-left-period": "MNGO Left In Period",
+  "mngo-per-period": "MNGO Per Period",
+  "period-progress": "Period Progress",
+  "perpetual-futures": "Futuros perpetuos",
+  "target-period-length": "Target Period Length",
+  "total-borrows": "Total de préstamos",
+  "total-deposit-value": "Valor total del depósito",
+  "total-deposits": "Depósitos totales",
+  "utilization": "Utilización"
+}

@@ -4,7 +4,7 @@ import Select from '../Select'
 import { useTranslation } from 'next-i18next'
 
 export default function StatsAssets({ latestStats, stats }) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'stats'])
   const [selectedAsset, setSelectedAsset] = useState<string>('BTC')
 
   const selectedStatsData = stats.filter((stat) => stat.name === selectedAsset)
@@ -68,7 +68,7 @@ export default function StatsAssets({ latestStats, stats }) {
           style={{ height: '330px' }}
         >
           <Chart
-            title={t('total-deposits')}
+            title={t('stats:total-deposits')}
             xAxis="time"
             yAxis="totalDeposits"
             data={selectedStatsData}
@@ -83,7 +83,7 @@ export default function StatsAssets({ latestStats, stats }) {
           style={{ height: '330px' }}
         >
           <Chart
-            title={t('deposit-interest')}
+            title={t('stats:deposit-interest')}
             xAxis="time"
             yAxis="depositRate"
             data={selectedStatsData}
@@ -99,7 +99,7 @@ export default function StatsAssets({ latestStats, stats }) {
           style={{ height: '330px' }}
         >
           <Chart
-            title={t('total-borrows')}
+            title={t('stats:total-borrows')}
             xAxis="time"
             yAxis="totalBorrows"
             data={selectedStatsData}
@@ -114,7 +114,7 @@ export default function StatsAssets({ latestStats, stats }) {
           style={{ height: '330px' }}
         >
           <Chart
-            title={t('borrow-interest')}
+            title={t('stats:borrow-interest')}
             xAxis="time"
             yAxis="borrowRate"
             data={selectedStatsData}

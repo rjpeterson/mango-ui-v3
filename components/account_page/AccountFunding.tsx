@@ -15,7 +15,7 @@ import { SaveIcon } from '@heroicons/react/outline'
 const QUOTE_DECIMALS = 6
 
 const AccountFunding = () => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'account'])
   const mangoAccount = useMangoStore((s) => s.selectedMangoAccount.current)
   const [fundingStats, setFundingStats] = useState<any>([])
   const [hourlyFunding, setHourlyFunding] = useState<any>([])
@@ -117,14 +117,14 @@ const AccountFunding = () => {
   return (
     <>
       <div className="pb-4 text-th-fgd-1 text-lg">
-        {t('total-funding-stats')}
+        {t('account:total-funding-stats')}
         <Button
           className={`float-right text-xs h-8 pt-0 pb-0 pl-3 pr-3`}
           onClick={exportFundingDataToCSV}
         >
           <div className={`flex items-center`}>
             <SaveIcon className={`h-4 w-4 mr-1.5`} />
-            {t('export-data')}
+            {t('account:export-data')}
           </div>
         </Button>
       </div>
@@ -133,8 +133,8 @@ const AccountFunding = () => {
           <Table>
             <thead>
               <TrHead>
-                <Th>{t('token')}</Th>
-                <Th>{t('total-funding')}</Th>
+                <Th>{t('account:token')}</Th>
+                <Th>{t('account:total-funding')}</Th>
               </TrHead>
             </thead>
             <tbody>
@@ -142,7 +142,9 @@ const AccountFunding = () => {
                 <TrBody index={0}>
                   <td colSpan={4}>
                     <div className="flex">
-                      <div className="mx-auto py-4">{t('no-funding')}</div>
+                      <div className="mx-auto py-4">
+                        {t('account:no-funding')}
+                      </div>
                     </div>
                   </td>
                 </TrBody>
@@ -188,7 +190,9 @@ const AccountFunding = () => {
             {!isEmpty(hourlyFunding) && !loading ? (
               <>
                 <div className="flex items-center justify-between pb-4 pt-6 w-full">
-                  <div className="text-th-fgd-1 text-lg">{t('history')}</div>
+                  <div className="text-th-fgd-1 text-lg">
+                    {t('account:history')}
+                  </div>
                   <Select
                     value={selectedAsset}
                     onChange={(a) => setSelectedAsset(a)}
@@ -233,7 +237,7 @@ const AccountFunding = () => {
                         <thead>
                           <TrHead>
                             <Th>{t('time')}</Th>
-                            <Th>{t('funding')}</Th>
+                            <Th>{t('account:funding')}</Th>
                           </TrHead>
                         </thead>
                         <tbody>
@@ -259,7 +263,7 @@ const AccountFunding = () => {
                       </Table>
                     ) : (
                       <div className="flex justify-center w-full bg-th-bkg-3 py-4">
-                        {t('no-funding')}
+                        {t('account:no-funding')}
                       </div>
                     )}
                   </div>

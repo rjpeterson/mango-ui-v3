@@ -17,7 +17,7 @@ export function exportDataToCSV(
 ) {
   if (dataToExport.length == 0) {
     notify({
-      title: t('export-data-empty'),
+      title: t('account:export-data-empty'),
       description: '',
       type: 'info',
     })
@@ -40,7 +40,7 @@ export function exportDataToCSV(
   exporter.generateCsv(dataToExport)
 
   notify({
-    title: t('export-data-success'),
+    title: t('account:export-data-success'),
     description: '',
   })
 }

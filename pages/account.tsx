@@ -43,7 +43,7 @@ export async function getServerSideProps({ locale }) {
 const TABS = ['Portfolio', 'Orders', 'History', 'Interest', 'Funding']
 
 export default function Account() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'account'])
   const [showAccountsModal, setShowAccountsModal] = useState(false)
   const [showNameModal, setShowNameModal] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
@@ -172,7 +172,7 @@ export default function Account() {
                 </div>
                 <div className="flex items-center text-th-red text-xxs">
                   <ExclamationCircleIcon className="h-4 mr-1.5 w-4" />
-                  {t('account-address-warning')}
+                  {t('account:account-address-warning')}
                 </div>
               </div>
               <div className="grid grid-cols-3 grid-rows-1 gap-2">
@@ -182,7 +182,9 @@ export default function Account() {
                 >
                   <div className="flex items-center">
                     <PencilIcon className="h-4 w-4 mr-1.5" />
-                    {mangoAccount?.name ? t('edit-name') : t('add-name')}
+                    {mangoAccount?.name
+                      ? t('account:edit-name')
+                      : t('account:add-name')}
                   </div>
                 </Button>
                 <a
@@ -191,7 +193,7 @@ export default function Account() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span>{t('explorer')}</span>
+                  <span>{t('account:explorer')}</span>
                   <ExternalLinkIcon className={`h-4 w-4 ml-1.5`} />
                 </a>
                 <Button
@@ -262,7 +264,7 @@ export default function Account() {
                 buttonText={t('create-account')}
                 icon={<CurrencyDollarIcon />}
                 onClickButton={() => setShowAccountsModal(true)}
-                title={t('no-account-found')}
+                title={t('account:no-account-found')}
               />
             )
           ) : (

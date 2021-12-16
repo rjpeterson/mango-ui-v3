@@ -51,7 +51,7 @@ export default function Borrow() {
               <h1 className={`mb-1 text-th-fgd-1 text-2xl font-semibold`}>
                 {t('borrow-funds')}
               </h1>
-              <p>{t('borrow-notification')}</p>
+              <p>{t('borrow:borrow-notification')}</p>
             </>
           ) : null}
         </div>

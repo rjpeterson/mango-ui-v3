@@ -1,0 +1,20 @@
+{
+  "average-borrow": "平均借贷率",
+  "average-deposit": "平均存款率",
+  "borrow-interest": "借贷利息",
+  "current-stats": "当前统计",
+  "deposit-interest": "存款利息",
+  "depth-rewarded": "奖励深度",
+  "est-period-end": "预计期末时间",
+  "liquidity-mining": "流动性挖矿",
+  "minutes": "分钟",
+  "mngo-left-period": "期间剩余的MNGO",
+  "mngo-per-period": "每期MNGO",
+  "period-progress": "期间进度",
+  "perpetual-futures": "永续合约",
+  "target-period-length": "目标期间长度",
+  "total-borrows": "借贷总数量",
+  "total-deposit-value": "存款总价值",
+  "total-deposits": "存款总数量",
+  "utilization": "利用率"
+}
