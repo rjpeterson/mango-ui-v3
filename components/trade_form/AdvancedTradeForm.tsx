@@ -8,6 +8,7 @@ import {
   nativeI80F48ToUi,
   PerpMarket,
   PerpOrderType,
+  getMarketByBaseSymbolAndKind,
 } from '@blockworks-foundation/mango-client'
 import {
   ExclamationIcon,
@@ -74,10 +75,10 @@ export default function AdvancedTradeForm({
   const [spotMargin, setSpotMargin] = useState(defaultSpotMargin)
   const [positionSizePercent, setPositionSizePercent] = useState('')
   const [insufficientSol, setInsufficientSol] = useState(false)
-  const { takerFee, makerFee } = useFees()
   const { totalMsrm } = useSrmAccount()
 
   const mangoGroup = useMangoStore((s) => s.selectedMangoGroup.current)
+  const selectedMangoGroup = useMangoStore((s) => s.selectedMangoGroup)
   const mangoCache = useMangoStore((s) => s.selectedMangoGroup.cache)
   const marketIndex = getMarketIndexBySymbol(
     groupConfig,
@@ -100,15 +101,18 @@ export default function AdvancedTradeForm({
     triggerPrice,
     triggerCondition,
   } = useMangoStore((s) => s.tradeForm)
-  const isLimitOrder = ['Limit', 'Stop Limit', 'Take Profit Limit'].includes(
+  const isLimitOrder = ['Limit', 'Stop Limit', 'Take Profit Limit' ,'Basis Limit'].includes(
     tradeType
   )
-  const isMarketOrder = ['Market', 'Stop Loss', 'Take Profit'].includes(
+  const isMarketOrder = ['Market', 'Stop Loss', 'Take Profit', 'Basis Market'].includes(
     tradeType
   )
   const isTriggerLimit = ['Stop Limit', 'Take Profit Limit'].includes(tradeType)
 
   const isTriggerOrder = TRIGGER_ORDER_TYPES.includes(tradeType)
+
+  const isBasisTrade = ['Basis Market', 'Basis Limit'].includes(tradeType)
+  const { takerFee, makerFee } = useFees(isBasisTrade)
 
   // TODO saml - create a tick box on the UI; Only available on perps
   // eslint-disable-next-line
@@ -561,7 +565,8 @@ export default function AdvancedTradeForm({
       })
       return
     }
-
+    let matchingSpotMarket
+    if (isBasisTrade) {matchingSpotMarket = marketConfig.baseSymbol + '/USDC'}
     const mangoAccount = useMangoStore.getState().selectedMangoAccount.current
     const mangoGroup = useMangoStore.getState().selectedMangoGroup.current
     const askInfo =
@@ -605,6 +610,7 @@ export default function AdvancedTradeForm({
         isTriggerOrder && 'trigger'
       )
       let txid
+      let txid2
       if (market instanceof Market) {
         txid = await mangoClient.placeSpotOrder2(
           mangoGroup,
@@ -669,6 +675,47 @@ export default function AdvancedTradeForm({
             side === 'buy' ? askInfo : bidInfo, // book side used for ConsumeEvents
             reduceOnly
           )
+        }
+
+        if (isBasisTrade) {
+          const spotConfig = getMarketByBaseSymbolAndKind(groupConfig, marketConfig.baseSymbol, 'spot')
+          const spotPK = spotConfig.publicKey
+          const spotMarket = selectedMangoGroup.markets[spotPK.toString()]
+          if (spotMarket instanceof PerpMarket) {
+            return
+          }
+          console.log(
+            'submit',
+            side == 'buy' ? 'sell' : 'buy',
+            baseSize.toString(),
+            orderPrice.toString(),
+            orderType,
+            true, // instanceof Market && 'spot',
+            false// isTriggerOrder && 'trigger'
+          )
+          txid2 = await mangoClient.placeSpotOrder2(
+            mangoGroup,
+            mangoAccount,
+            spotMarket,
+            wallet,
+            side == 'buy' ? 'sell' : 'buy',
+            orderPrice,
+            baseSize,
+            orderType,
+            null,
+            totalMsrm > 0
+          )
+          if (txid2 instanceof Array) {
+            for (const [index, id] of txid2.entries()) {
+              notify({
+                title:
+                  index === 0 ? 'Transaction successful' : t('successfully-placed'),
+                txid: id,
+              })
+            }
+          } else {
+            notify({ title: t('successfully-placed'), txid: txid2 })
+          }
         }
       }
       if (txid instanceof Array) {
@@ -772,6 +819,7 @@ export default function AdvancedTradeForm({
             onChange={onTradeTypeChange}
             value={tradeType}
             offerTriggers={isPerpMarket}
+            offerBasis={isPerpMarket}
           />
         </div>
         <div className="col-span-12 md:col-span-6">
@@ -885,7 +933,7 @@ export default function AdvancedTradeForm({
                 : ['10', '25', '50', '75', '100']
             }
           />
-          {marketConfig.kind === 'perp' ? (
+          {marketConfig.kind === 'perp' && !isBasisTrade ? (
             side === 'sell' ? (
               roundedDeposits > 0 ? (
                 <div className="text-th-fgd-4 text-xs tracking-normal mt-2">
@@ -988,33 +1036,78 @@ export default function AdvancedTradeForm({
           ) : null}
           <div className={`flex pt-4`}>
             {canTrade ? (
-              <Button
-                disabled={disabledTradeButton}
-                onClick={onSubmit}
-                className={`bg-th-bkg-2 border ${
-                  !disabledTradeButton
-                    ? side === 'buy'
-                      ? 'border-th-green hover:border-th-green-dark text-th-green hover:bg-th-green-dark'
-                      : 'border-th-red hover:border-th-red-dark text-th-red hover:bg-th-red-dark'
-                    : 'border border-th-bkg-4'
-                } hover:text-th-fgd-1 flex-grow`}
-              >
-                {sizeTooLarge
-                  ? t('too-large')
-                  : side === 'buy'
-                  ? `${
-                      baseSize > 0 ? `${t('buy')} ` + baseSize : `${t('buy')} `
-                    } ${
-                      isPerpMarket ? marketConfig.name : marketConfig.baseSymbol
-                    }`
-                  : `${
-                      baseSize > 0
-                        ? `${t('sell')} ` + baseSize
-                        : `${t('sell')} `
-                    } ${
-                      isPerpMarket ? marketConfig.name : marketConfig.baseSymbol
-                    }`}
-              </Button>
+              !isBasisTrade ? (
+                <Button
+                  disabled={disabledTradeButton}
+                  onClick={onSubmit}
+                  className={`bg-th-bkg-2 border ${
+                    !disabledTradeButton
+                      ? side === 'buy'
+                        ? 'border-th-green hover:border-th-green-dark text-th-green hover:bg-th-green-dark'
+                        : 'border-th-red hover:border-th-red-dark text-th-red hover:bg-th-red-dark'
+                      : 'border border-th-bkg-4'
+                  } hover:text-th-fgd-1 flex-grow`}
+                >
+                  {sizeTooLarge
+                    ? t('too-large')
+                    : side === 'buy'
+                    ? `${
+                        baseSize > 0 ? `${t('buy')} ` + baseSize : `${t('buy')} `
+                      } ${
+                        isPerpMarket ? marketConfig.name : marketConfig.baseSymbol
+                      }`
+                    : `${
+                        baseSize > 0
+                          ? `${t('sell')} ` + baseSize
+                          : `${t('sell')} `
+                      } ${
+                        isPerpMarket ? marketConfig.name : marketConfig.baseSymbol
+                      }`}
+                </Button>
+              ) : (
+                // if basis trade, buy/sell perp & spot simultaneously
+                <Button
+                  disabled={disabledTradeButton}
+                  onClick={onSubmit}
+                  className={`bg-th-bkg-2 border ${
+                    !disabledTradeButton
+                      ? side === 'buy'
+                        ? 'border-th-green hover:border-th-green-dark text-th-green hover:bg-th-green-dark'
+                        : 'border-th-red hover:border-th-red-dark text-th-red hover:bg-th-red-dark'
+                      : 'border border-th-bkg-4'
+                  } hover:text-th-fgd-1 flex-grow`}
+                >
+                  {sizeTooLarge
+                    ? t('too-large')
+                    : side === 'buy'
+                    ? `${
+                        baseSize > 0
+                          ? `${t('buy')} ` + baseSize 
+                          : `${t('buy')} `
+                      } ${
+                        marketConfig.name
+                      } & ${
+                        baseSize > 0
+                          ? `${t('sell')} ` + baseSize 
+                          : `${t('sell')} `
+                      } ${
+                        marketConfig.baseSymbol
+                      }`
+                    : `${
+                        baseSize > 0
+                          ? `${t('sell')} ` + baseSize
+                          : `${t('sell')} `
+                      } ${
+                        marketConfig.name
+                      } & ${
+                        baseSize > 0
+                          ? `${t('buy')} ` + baseSize 
+                          : `${t('buy')} `
+                      } ${
+                        marketConfig.baseSymbol
+                      }`}
+                </Button>
+              )
             ) : (
               <div className="flex-grow">
                 <Tooltip content={t('country-not-allowed-tooltip')}>

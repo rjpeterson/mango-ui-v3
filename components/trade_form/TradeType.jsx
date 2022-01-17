@@ -6,6 +6,7 @@ const TradeType = ({
   value,
   onChange,
   offerTriggers = false,
+  offerBasis = false,
   className = '',
 }) => {
   const { t } = useTranslation('common')
@@ -17,6 +18,11 @@ const TradeType = ({
       'Take Profit',
       'Take Profit Limit'
     )
+  if (offerBasis) 
+      TRADE_TYPES.push(
+        // 'Basis Limit',
+        'Basis Market'
+      )
 
   return (
     <div className={`relative ${className}`}>

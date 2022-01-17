@@ -5,7 +5,7 @@ import {
 import useSrmAccount from '../hooks/useSrmAccount'
 import useMangoStore from '../stores/useMangoStore'
 
-export default function useFees() {
+export default function useFees(isBasisTrade = false) {
   const { rates } = useSrmAccount()
   const mangoGroup = useMangoStore((s) => s.selectedMangoGroup.current)
   const mangoGroupConfig = useMangoStore((s) => s.selectedMangoGroup.config)
@@ -26,6 +26,10 @@ export default function useFees() {
     makerFee = parseFloat(
       mangoGroup.perpMarkets[marketIndex].makerFee.toFixed()
     )
+    if (isBasisTrade) {
+      takerFee = takerFee + rates.takerWithRebate
+      makerFee = makerFee + rates.maker
+     }
   } else {
     takerFee = rates.takerWithRebate
     makerFee = rates.maker
