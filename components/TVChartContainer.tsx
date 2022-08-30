@@ -619,7 +619,6 @@ const TVChartContainer = () => {
     }
   }, [showOrderLines])
 
-  
   // updated order lines if a user's open orders change
   useEffect(() => {
     if (chartReady && tvWidgetRef?.current) {
