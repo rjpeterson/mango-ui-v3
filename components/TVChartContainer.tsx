@@ -687,7 +687,6 @@ const TVChartContainer = () => {
           return trade.marketName === selectedMarketName
         }).length
       tvWidgetRef.current.onChartReady(() => {
-        console.log(`tradeArrows.size: ${tradeArrows.size}; tradesInMarket: ${tradesInMarket}`)
         if (tradeArrows.size !== tradesInMarket) {
           drawTradeExecutions()
         }
