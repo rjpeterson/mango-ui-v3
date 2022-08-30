@@ -102,8 +102,8 @@ const TVChartContainer = () => {
         tvWidgetRef.current.activeChart().resolution(),
         () => {
           if (showOrderLines) {
-            drawLinesForMarket()
             deleteLines()
+            drawLinesForMarket()
           }
         }
       )
