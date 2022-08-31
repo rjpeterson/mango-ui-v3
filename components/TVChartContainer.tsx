@@ -737,12 +737,6 @@ const TVChartContainer = () => {
   }
 
   const deleteTradeExecutions = () => {
-    if(previousTradeExecutions && chartReady && tvWidgetRef?.current) {
-      console.log(`previous trade executions: ${JSON.stringify(previousTradeExecutions.values())}`)
-      for (const tradeExecution of previousTradeExecutions.values()) {
-        tradeExecution.remove()
-      }
-    }
     if (tradeHistory?.length && chartReady && tvWidgetRef?.current) {
       for (const tradeExecution of tradeExecutions.values()) {
         tradeExecution.remove()
@@ -758,7 +752,7 @@ const TVChartContainer = () => {
     if (!showTradeExecutions) {
       deleteTradeExecutions()
     }
-  }, [showTradeExecutions, mangoAccount])
+  }, [showTradeExecutions])
 
   // update trade executions if transaction history changes
   useEffect(() => {
